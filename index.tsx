@@ -44,13 +44,19 @@ export default class OTPInputView extends Component<InputProps, OTPInputViewStat
 
     componentDidMount() {
         this.copyCodeFromClipBoardOnAndroid()
-        this.bringUpKeyBoardIfNeeded()
+        // this.bringUpKeyBoardIfNeeded()
+        setTimeout(()=>{
+            this.bringUpKeyBoardIfNeeded();
+        },0)
         this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.handleKeyboardDidHide)
     }
 
     componentWillUnmount() {
-        if (this.timer) {
-            clearInterval(this.timer)
+        // if (this.timer) {
+        //     clearInterval(this.timer)
+        // }
+        if (this._timer) {
+            clearInterval(this._timer)
         }
         this.keyboardDidHideListener?.remove()
     }
@@ -158,8 +164,15 @@ export default class OTPInputView extends Component<InputProps, OTPInputViewStat
     }
 
     focusField = (index: number) => {
-        if (index < this.fields.length) {
-            (this.fields[index] as TextInput).focus();
+        // if (index < this.fields.length) {
+        //     (this.fields[index] as TextInput).focus();
+        //     this.setState({
+        //         selectedIndex: index
+        //     })
+        // }
+
+        if (index < this.fields.length && this.fields[index]) {
+            this.fields[index].focus()
             this.setState({
                 selectedIndex: index
             })
